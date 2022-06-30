@@ -1,24 +1,18 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class ContactTest {
 
     @Test
-    public void getNameTest() {
-        // given:
-        Contact contact = new Contact("Alex", "123456");
-        // then:
-        assertEquals("Alex", contact.getName());
-        assertNotNull(contact.getName());
-    }
-    @Test
-    public void createContactTest(){
+    public void createContactTest() {
         // given:
         String name = "Sarah";
         String phone = "12345678";
@@ -27,14 +21,22 @@ public class ContactTest {
         // then:
         assertEquals("12345678", contact.phone);
     }
+
     @Test
-    public void initGroupTest (){
+    public void addGroupTest() {
         // given:
+        String group = "Семья";
         PhoneBook phoneBook = new PhoneBook();
-        // when:
-        Main.initGroup(phoneBook);//добавляем группы "Семья","Коллеги","Друзья"
         // then:
-        assertFalse(phoneBook.addGroup("Коллеги"));//нельзя добавить группу с одинаковым названием
-        assertTrue(phoneBook.addGroup("Доставка")); // а сдругим названием можно
+        assertTrue(phoneBook.addGroup(group));
+    }
+
+    @Test
+    public void getContactByPhoneTest() {
+        PhoneBook phoneBook = new PhoneBook();
+        Contact contact = new Contact("Andrew", "11111111");
+        phoneBook.addContact(contact, "Семья");
+        Contact contactGetted = phoneBook.getContactByPhone("11111111");
+        assertEquals("Andrew", contact.getName());
     }
 }
